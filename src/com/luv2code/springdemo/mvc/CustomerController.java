@@ -15,18 +15,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/customer")
 public class CustomerController {
 
-	// add an initbinder	
-	// remove leading and trailing whitespace	
-	//resolve issue for our validation
-	
+	// add an initbinder
+	// remove leading and trailing whitespace
+	// resolve issue for our validation
+
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
-		
+
 		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
-		
+
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}
-	
+
 	@RequestMapping("/showForm")
 	public String showform(Model theModel) {
 
@@ -39,10 +39,12 @@ public class CustomerController {
 	public String processForm(@Valid @ModelAttribute("customer") Customer theCustomer, BindingResult theBindingResult) {
 
 		System.out.println("Lastname: " + theCustomer.getLastName());
+
+		System.out.println("Binding result:" + theBindingResult);
+
 		if (theBindingResult.hasErrors()) {
 			return "customer-form";
-		} 
-		else {
+		} else {
 
 			return "customer-confirmation";
 		}
